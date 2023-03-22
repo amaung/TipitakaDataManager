@@ -26,13 +26,14 @@ namespace TipitakaDataManager
             this.parent = parent;
             clientTipitakaDB = parent.clientTipitakaDB as ClientTipitakaDB;
             clientTipitakaDBLogin = parent.clientTipitakaDBLogin as ClientTipitakaDBLogin;
-            clientActivityLog= parent.clientActivityLog as ClientActivityLog;
+            clientActivityLog = parent.clientActivityLog as ClientActivityLog;
 
             InitializeComponent();
             textBox_LoginStatus.Text = String.Empty;
             button_Login.Focus();
             label_Date.Text = DateTime.Now.ToString("MMM dd, yyyy");
             button_ShowPswd.Image = Resources.showPasswordEye;
+            label_ServerName.Text = parent.clientTipitakaDB.GetCloudStorageName();
 #if DEBUG
             textBox_UserID.Text = "tipitaka.manager@gmail.com";
             textBox_Password.Text = "12345";
@@ -53,7 +54,7 @@ namespace TipitakaDataManager
             if (clientActivityLog != null && clientTipitakaDBLogin != null)
             {
                 UserProfile? userProfile = clientTipitakaDBLogin.Login(textBox_UserID.Text, textBox_Password.Text, "A");
-                if ((clientTipitakaDBLogin.StatusCode == 200 || clientTipitakaDBLogin.StatusCode == 204 ) && userProfile != null)
+                if ((clientTipitakaDBLogin.StatusCode == 200 || clientTipitakaDBLogin.StatusCode == 204) && userProfile != null)
                 {
                     if (userProfile.UserClass == "A" || userProfile.UserClass == "D")
                     {
@@ -122,7 +123,7 @@ namespace TipitakaDataManager
         {
             if (showPassword)
             {
-                textBox_Password.PasswordChar= '\0';
+                textBox_Password.PasswordChar = '\0';
                 button_ShowPswd.Image = Resources.hidePasswordEye;
             }
             else
@@ -130,7 +131,7 @@ namespace TipitakaDataManager
                 textBox_Password.PasswordChar = '*';
                 button_ShowPswd.Image = Resources.showPasswordEye;
             }
-            showPassword =! showPassword;
+            showPassword = !showPassword;
         }
 
         private void PasswordChanged(object sender, EventArgs e)
